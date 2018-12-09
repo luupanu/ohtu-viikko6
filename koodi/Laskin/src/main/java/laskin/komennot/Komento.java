@@ -1,4 +1,4 @@
-package laskin;
+package laskin.komennot;
 
 public interface Komento {
   void suorita();

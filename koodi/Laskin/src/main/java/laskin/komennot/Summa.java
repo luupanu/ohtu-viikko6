@@ -1,7 +1,8 @@
-package laskin;
+package laskin.komennot;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import laskin.Sovelluslogiikka;
 
 public class Summa extends Laskuoperaatio {
 
