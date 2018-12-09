@@ -2,51 +2,52 @@ package laskin.komennot;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import java.util.Deque;
+import java.util.LinkedList;
 import laskin.Sovelluslogiikka;
 
 public abstract class Laskuoperaatio implements Komento {
 
-    private TextField tuloskentta;
+    private Deque<Integer> historia;
     private TextField syotekentta;
-    private Button nollaa;
-    private Button undo;
+    private TextField tuloskentta;
     protected Sovelluslogiikka sovellus;
 
-    public Laskuoperaatio(TextField tuloskentta, TextField syotekentta, Button nollaa, Button undo, Sovelluslogiikka sovellus) {
+    public Laskuoperaatio(TextField tuloskentta, TextField syotekentta, Sovelluslogiikka sovellus) {
         this.tuloskentta = tuloskentta;
         this.syotekentta = syotekentta;
-        this.nollaa = nollaa;
-        this.undo = undo;
         this.sovellus = sovellus;
+        this.historia = new LinkedList<>();
     }
 
     @Override
-    public void suorita() {
+    public boolean suorita() {
         int arvo = 0;
 
         try {
             arvo = Integer.parseInt(syotekentta.getText());
         } catch (Exception e) {
+            return false;
         }
 
+        muistaEdellinen();
         laske(arvo);
 
-        int laskunTulos = sovellus.tulos();
-
-        syotekentta.setText("");
-        tuloskentta.setText("" + laskunTulos);
-
-        if (laskunTulos == 0) {
-            nollaa.disableProperty().set(true);
-        } else {
-            nollaa.disableProperty().set(false);
-        }
-        undo.disableProperty().set(false);
+        return true;
     }
 
     @Override
     public void peru() {
+        sovellus.nollaa();
+        sovellus.plus(historia.pop());
+    }
 
+    @Override
+    public void muistaEdellinen() {
+        try {
+            historia.push(Integer.parseInt(tuloskentta.getText()));
+        } catch (Exception e) {
+        }
     }
 
     protected abstract void laske(int luku);

@@ -6,8 +6,8 @@ import laskin.Sovelluslogiikka;
 
 public class Summa extends Laskuoperaatio {
 
-    public Summa(TextField tuloskentta, TextField syotekentta, Button nollaa, Button undo, Sovelluslogiikka sovellus) {
-        super(tuloskentta, syotekentta, nollaa, undo, sovellus);
+    public Summa(TextField tuloskentta, TextField syotekentta, Sovelluslogiikka sovellus) {
+        super(tuloskentta, syotekentta, sovellus);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package laskin.komennot;
 
 public interface Komento {
-  void suorita();
+  boolean suorita();
+  void muistaEdellinen();
   void peru();
 }
